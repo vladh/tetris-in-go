@@ -1,7 +1,10 @@
 package main
 
 import (
+	// "math"
+
 	"github.com/faiface/pixel"
+	"github.com/faiface/pixel/imdraw"
 	"github.com/faiface/pixel/pixelgl"
 	"golang.org/x/image/colornames"
 )
@@ -17,9 +20,15 @@ func run() {
 		panic(err)
 	}
 
-	win.Clear(colornames.Skyblue)
+	imd := imdraw.New(nil)
+
+	imd.Color = colornames.Blueviolet
+	imd.Push(pixel.V(100, 100), pixel.V(200, 200))
+	imd.Rectangle(0)
 
 	for !win.Closed() {
+		win.Clear(colornames.Aliceblue)
+		imd.Draw(win)
 		win.Update()
 	}
 }
