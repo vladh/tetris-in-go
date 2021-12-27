@@ -4,6 +4,8 @@ import (
   "image/color"
   "log"
   "fmt"
+  "runtime/pprof"
+  "os"
 
   "github.com/hajimehoshi/ebiten/v2"
   _ "github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -29,6 +31,13 @@ func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, scr
 }
 
 func main() {
+  f, err := os.Create("main.prof")
+  if err != nil {
+    log.Fatal(err)
+  }
+  pprof.StartCPUProfile(f)
+  defer pprof.StopCPUProfile()
+
   fmt.Println("start")
   game := Game{
     TileImage: ebiten.NewImage(64, 64),
