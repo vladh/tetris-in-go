@@ -1,6 +1,6 @@
 # Tetris in Go
 
-This is an attempt at making Tetris in Go in a way which
+This is an attempt at implementing Tetris in Go in a way which
 
 * has the most unobtrusive dependencies possible, and
 * uses the most beginner-friendly dependencies and techniques available.
