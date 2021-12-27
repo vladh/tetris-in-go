@@ -3,12 +3,15 @@ package main
 import (
   "image/color"
   "log"
+  "fmt"
 
   "github.com/hajimehoshi/ebiten/v2"
   _ "github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-type Game struct {}
+type Game struct {
+  TileImage *ebiten.Image
+}
 
 func (g *Game) Update() error {
   return nil
@@ -16,6 +19,9 @@ func (g *Game) Update() error {
 
 func (g *Game) Draw(screen *ebiten.Image) {
   screen.Fill(color.RGBA{0x80, 0, 0xff, 0xff})
+  options := &ebiten.DrawImageOptions{}
+  options.GeoM.Translate(20, 20)
+  screen.DrawImage(g.TileImage, options)
 }
 
 func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, screenHeight int) {
@@ -23,9 +29,18 @@ func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, scr
 }
 
 func main() {
+  fmt.Println("start")
+  game := Game{
+    TileImage: ebiten.NewImage(64, 64),
+  }
+  game.TileImage.Fill(color.RGBA{0xff, 0, 0, 0xff})
+  fmt.Println("init done")
+
   ebiten.SetWindowSize(640, 480)
   ebiten.SetWindowTitle("Hello, World!")
-  if err := ebiten.RunGame(&Game{}); err != nil {
+  fmt.Println("window init done")
+
+  if err := ebiten.RunGame(&game); err != nil {
     log.Fatal(err)
   }
 }
